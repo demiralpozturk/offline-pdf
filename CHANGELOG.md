@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 — 2026-11-27
+
+- "Creator: Demiralp Öztürk" with GitHub and LinkedIn links in the About dialog and the home screen footer.
+- README: detailed project structure (every folder and file explained) in English and Turkish.
+
 ## 1.0.0 — 2026-11-27
 
 First public release.
