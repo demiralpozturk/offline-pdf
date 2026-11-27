@@ -9,6 +9,7 @@
 Merge, split, compress, convert, watermark, number, protect and inspect PDFs.<br>
 Free and open source. No uploads, no account, no ads, no limits.
 
+[![CI](https://github.com/demiralpozturk/offline-pdf/actions/workflows/ci.yml/badge.svg)](https://github.com/demiralpozturk/offline-pdf/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4f46e5.svg)](LICENSE)
 ![Platform: Windows](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0ea5e9.svg)
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-10b981.svg)
