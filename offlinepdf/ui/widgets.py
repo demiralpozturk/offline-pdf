@@ -27,7 +27,7 @@ from PySide6.QtWidgets import (
 from .. import i18n
 from ..i18n import t
 from . import icons, theme
-from .worker import THUMB_POOL, ThumbnailJob, ThumbSignals
+from .worker import ThumbnailJob, ThumbSignals, thumb_pool
 
 PATH_ROLE = Qt.UserRole
 META_ROLE = Qt.UserRole + 1
@@ -433,7 +433,7 @@ class PageGrid(QListWidget):
             self.addItem(item)
         self._token = uuid.uuid4().hex
         self._job = ThumbnailJob(self._token, path, list(range(pages)), 260, password, self._signals)
-        THUMB_POOL.start(self._job)
+        thumb_pool().start(self._job)
 
     def _on_thumb(self, token: str, index: int, image: QImage) -> None:
         if token != self._token:

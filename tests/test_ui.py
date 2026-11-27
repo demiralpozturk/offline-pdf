@@ -20,8 +20,7 @@ from offlinepdf.ui.tools import ALL_TOOLS  # noqa: E402
 
 def settle():
     for _ in range(5):
-        worker.THUMB_POOL.waitForDone(10000)
-        worker.TOOL_POOL.waitForDone(30000)
+        worker.wait_all(30000)
         QApplication.processEvents()
 
 

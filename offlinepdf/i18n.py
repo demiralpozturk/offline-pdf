@@ -451,6 +451,13 @@ def t(key: str, **params) -> str:
     return text
 
 
+def upper(text: str) -> str:
+    """Uppercase that respects Turkish dotted/dotless i."""
+    if _current == "tr":
+        text = text.replace("i", "İ").replace("ı", "I")
+    return text.upper()
+
+
 def human_size(size: int) -> str:
     value = float(size)
     for unit in ("B", "KB", "MB", "GB"):

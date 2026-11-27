@@ -5,18 +5,45 @@ from __future__ import annotations
 import traceback
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, QThreadPool, Signal
+from PySide6.QtCore import QCoreApplication, QObject, QRunnable, QThreadPool, Signal
 from PySide6.QtGui import QImage
 from PIL import Image
 
-# Tool jobs and thumbnail jobs get their own pools so a long render
-# queue never blocks a tool from starting (PDFium itself is serialized).
-TOOL_POOL = QThreadPool()
-TOOL_POOL.setMaxThreadCount(1)
-THUMB_POOL = QThreadPool()
-THUMB_POOL.setMaxThreadCount(1)
-
+# Tool jobs and thumbnail jobs get their own pools so a long render queue
+# never blocks a tool from starting (PDFium itself is serialized). The pools
+# are children of the QApplication so Qt tears them down in the right order.
+_pools: dict[str, QThreadPool] = {}
 _alive: set["JobSignals"] = set()
+
+
+def _pool(name: str) -> QThreadPool:
+    pool = _pools.get(name)
+    if pool is None:
+        pool = QThreadPool(QCoreApplication.instance())
+        pool.setMaxThreadCount(1)
+        _pools[name] = pool
+    return pool
+
+
+def tool_pool() -> QThreadPool:
+    return _pool("tool")
+
+
+def thumb_pool() -> QThreadPool:
+    return _pool("thumb")
+
+
+def wait_all(msecs: int = 30000) -> None:
+    for pool in list(_pools.values()):
+        pool.waitForDone(msecs)
+
+
+def shutdown() -> None:
+    """Drop queued jobs and wait for running ones; call before the app exits."""
+    for pool in list(_pools.values()):
+        pool.clear()
+        pool.waitForDone(15000)
+    _pools.clear()
 
 
 class JobSignals(QObject):
@@ -46,9 +73,9 @@ class Job(QRunnable):
             self.signals.finished.emit(result)
 
 
-def start(fn: Callable, *, pool: QThreadPool = TOOL_POOL) -> JobSignals:
+def start(fn: Callable, *, pool: QThreadPool | None = None) -> JobSignals:
     job = Job(fn)
-    pool.start(job)
+    (pool or tool_pool()).start(job)
     return job.signals
 
 
