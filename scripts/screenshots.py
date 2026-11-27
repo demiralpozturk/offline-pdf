@@ -29,8 +29,7 @@ SIZE = (1280, 820)
 
 def settle(rounds: int = 6) -> None:
     for _ in range(rounds):
-        worker.THUMB_POOL.waitForDone(5000)
-        worker.TOOL_POOL.waitForDone(20000)
+        worker.wait_all(20000)
         QApplication.processEvents()
 
 
