@@ -14,7 +14,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from .. import __version__, app_info
+from .. import __version__, app_info, i18n
 from ..i18n import t
 from . import icons, theme
 from .tools import ALL_TOOLS, CATEGORIES
@@ -101,7 +101,7 @@ class HomePage(QWidget):
         self.sections: list[tuple[QLabel, QWidget, QGridLayout, list[ToolCard]]] = []
         for category in CATEGORIES:
             tools = [cls for cls in ALL_TOOLS if cls.category == category]
-            title = QLabel(t(f"cat.{category}").upper())
+            title = QLabel(i18n.upper(t(f"cat.{category}")))
             title.setObjectName("SectionTitle")
             holder = QWidget()
             grid = QGridLayout(holder)

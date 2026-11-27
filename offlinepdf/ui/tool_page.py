@@ -354,7 +354,7 @@ class ToolPage(QWidget):
                 continue
             job = worker.ThumbnailJob(str(entry.path), str(entry.path), [0], 120, entry.password, self._thumb_signals)
             self._jobs.append(job)
-            worker.THUMB_POOL.start(job)
+            worker.thumb_pool().start(job)
 
     def _on_list_thumb(self, token: str, index: int, image: QImage) -> None:
         if self.file_list is not None:

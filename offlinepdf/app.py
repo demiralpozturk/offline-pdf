@@ -58,7 +58,13 @@ def main(argv: list[str] | None = None) -> int:
 
     window = MainWindow(settings)
     window.show()
-    return app.exec()
+    code = app.exec()
+    from .ui import worker
+
+    worker.shutdown()
+    window.deleteLater()
+    app.processEvents()
+    return code
 
 
 if __name__ == "__main__":
