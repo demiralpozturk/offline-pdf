@@ -117,15 +117,50 @@ python scripts/screenshots.py   # regenerate README screenshots and demo GIF
 
 `OfflinePDF.exe --selftest <folder>` runs every tool on generated documents, builds the whole UI off-screen and writes `report.json` — handy for checking a build on another machine.
 
-### Project layout
+### Project structure
+
+Every file is plain, readable Python — open any of them on GitHub and follow along.
 
 ```
-offlinepdf/core/     PDF engine: plain functions, no UI, fully tested
-offlinepdf/ui/       PySide6 interface (home screen, tool pages, widgets, themes)
-offlinepdf/cli.py    command line
-offlinepdf/i18n.py   all texts, English + Turkish
-tests/               pytest suite (core, CLI, headless UI)
-scripts/             build, screenshots, icon
+offline-pdf/
+├── offlinepdf/                 the application package
+│   ├── core/                   PDF engine: plain functions, no UI, fully tested
+│   │   ├── organize.py         merge, split, extract, delete, reorder, rotate
+│   │   ├── optimize.py         compression (image re-encoding + object streams)
+│   │   ├── convert.py          images → PDF, PDF → images
+│   │   ├── overlay.py          text watermarks and page numbers
+│   │   ├── security.py         AES-256 password protection and removal
+│   │   ├── metadata.py         read / edit / strip metadata, PDF summary
+│   │   ├── render.py           page rendering with PDFium (thumbnails, PDF → images)
+│   │   ├── pages.py            page-range parsing ("1-3, 7, 10-")
+│   │   ├── document.py         safe open/save helpers, output file names
+│   │   └── errors.py           errors with stable codes the UI translates
+│   ├── ui/                     PySide6 (Qt) desktop interface
+│   │   ├── main_window.py      header bar + home / tool pages
+│   │   ├── home.py             start screen: search and tool cards
+│   │   ├── tool_page.py        one screen per tool: files left, options right
+│   │   ├── tools.py            the 15 tools: options and how they call core/
+│   │   ├── widgets.py          drop zone, file list, page thumbnail grid
+│   │   ├── worker.py           runs slow work off the UI thread
+│   │   ├── theme.py            light and dark themes
+│   │   ├── icons.py            icons from the Windows icon fonts
+│   │   ├── about.py            About dialog (author links)
+│   │   └── resources.py        paths to bundled assets
+│   ├── app.py                  application entry point
+│   ├── cli.py                  `offlinepdf-cli` command line
+│   ├── i18n.py                 every user-facing text, English + Turkish
+│   ├── app_info.py             author and contact links (the only place to edit them)
+│   ├── samples.py              generates sample documents for tests and screenshots
+│   └── selftest.py             headless end-to-end check, also used on the packaged .exe
+├── tests/                      pytest suite: core, CLI and headless UI (47 tests)
+├── scripts/
+│   ├── build.py                PyInstaller build → zip → self-test of the .exe
+│   ├── screenshots.py          README screenshots and demo GIF, rendered off-screen
+│   ├── make_icon.py            draws the app icon
+│   └── entry_gui.py / entry_cli.py   entry points for the packaged executables
+├── docs/                       demo GIF and screenshots used in this README
+├── assets/                     app icon
+└── .github/                    issue and pull request templates
 ```
 
 ## Built with
@@ -160,7 +195,7 @@ If OfflinePDF saved you an upload, a ⭐ on GitHub helps others find it.
 
 ## Author
 
-Made by **Demiralp Öztürk** — [GitHub](https://github.com/demiralpozturk)
+**Creator: Demiralp Öztürk** — [GitHub](https://github.com/demiralpozturk) · [LinkedIn](https://www.linkedin.com/in/demiralp-%C3%B6zt%C3%BCrk/)
 
 ## License
 
@@ -225,4 +260,21 @@ Hata bildirimleri, çeviriler ve pull request'ler memnuniyetle karşılanır —
 
 Beğendiysen GitHub'da ⭐ vererek başkalarının da bulmasına yardım edebilirsin.
 
-**Geliştiren:** Demiralp Öztürk — [GitHub](https://github.com/demiralpozturk)
+### Proje yapısı
+
+Kod klasörlere ayrılmış, her dosya tek bir işi yapıyor; GitHub'da istediğin dosyayı açıp takip edebilirsin.
+
+| Klasör / dosya | Ne yapar |
+|---|---|
+| `offlinepdf/core/` | PDF motoru: arayüzden bağımsız, testli fonksiyonlar (birleştirme, bölme, sıkıştırma, dönüştürme, filigran, şifreleme, meta veri) |
+| `offlinepdf/ui/` | PySide6 masaüstü arayüzü: ana ekran, araç sayfaları, küçük resimler, temalar |
+| `offlinepdf/cli.py` | `offlinepdf-cli` komut satırı |
+| `offlinepdf/i18n.py` | Uygulamadaki tüm metinler, Türkçe + İngilizce |
+| `offlinepdf/app_info.py` | Yazar ve iletişim bağlantıları |
+| `offlinepdf/selftest.py` | Pencere açmadan uçtan uca kontrol (paketli exe'de de çalışır) |
+| `tests/` | 47 pytest testi |
+| `scripts/` | Derleme, ekran görüntüsü/GIF üretimi, simge |
+
+Ayrıntılı ağaç için yukarıdaki [Project structure](#project-structure) bölümüne bak.
+
+**Creator: Demiralp Öztürk** — [GitHub](https://github.com/demiralpozturk) · [LinkedIn](https://www.linkedin.com/in/demiralp-%C3%B6zt%C3%BCrk/)

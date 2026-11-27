@@ -21,7 +21,7 @@ body:
     id: version
     attributes:
       label: OfflinePDF version
-      placeholder: "1.0.0 (see About)"
+      placeholder: "1.0.1 (see About)"
   - type: input
     id: os
     attributes:
