@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "offlinepdf"
+version = "1.0.0"
+description = "Free, open-source PDF toolkit that never uploads your files."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Demiralp Öztürk" }]
+requires-python = ">=3.10"
+keywords = ["pdf", "pdf-tools", "offline", "privacy", "merge", "split", "compress"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Operating System :: Microsoft :: Windows",
+    "Environment :: X11 Applications :: Qt",
+    "Topic :: Office/Business",
+]
+dependencies = [
+    "PySide6-Essentials>=6.7",
+    "pypdf>=5.0",
+    "pikepdf>=9.0",
+    "pypdfium2>=4.30",
+    "Pillow>=10.0",
+    "reportlab>=4.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/demiralpozturk/offline-pdf"
+Issues = "https://github.com/demiralpozturk/offline-pdf/issues"
+
+[project.gui-scripts]
+offlinepdf = "offlinepdf.app:main"
+
+[project.scripts]
+offlinepdf-cli = "offlinepdf.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["offlinepdf*"]

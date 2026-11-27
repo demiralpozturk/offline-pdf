@@ -1,0 +1,6 @@
+PySide6-Essentials>=6.7
+pypdf>=5.0
+pikepdf>=9.0
+pypdfium2>=4.30
+Pillow>=10.0
+reportlab>=4.2
