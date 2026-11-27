@@ -27,7 +27,11 @@ def settle():
 @pytest.fixture(scope="module")
 def app():
     application, _ = create_app(["test"])
-    return application
+    yield application
+    # Same clean-up as the real app on exit: stop the worker pools before Qt goes away,
+    # otherwise the interpreter can crash while tearing down running threads.
+    worker.shutdown()
+    QApplication.processEvents()
 
 
 @pytest.fixture
@@ -39,7 +43,10 @@ def window(app, tmp_path):
     win.resize(1200, 800)
     win.show()
     yield win
+    settle()
     win.close()
+    win.deleteLater()
+    QApplication.processEvents()
 
 
 @pytest.fixture(scope="module")
