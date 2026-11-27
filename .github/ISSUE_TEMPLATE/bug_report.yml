@@ -1,0 +1,32 @@
+name: Bug report
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Which tool did you use, what did you expect and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open "Merge PDF"
+        2. Add two files
+        3. ...
+  - type: input
+    id: version
+    attributes:
+      label: OfflinePDF version
+      placeholder: "1.0.0 (see About)"
+  - type: input
+    id: os
+    attributes:
+      label: Windows version
+      placeholder: "Windows 11 23H2"
+  - type: markdown
+    attributes:
+      value: Please do not attach private documents. If a file is needed, share a sample that reproduces the problem.
