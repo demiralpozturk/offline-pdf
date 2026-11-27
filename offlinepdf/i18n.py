@@ -20,7 +20,7 @@ STRINGS: dict[str, dict[str, str]] = {
         "app.theme_dark": "Dark theme",
         "app.language": "Language",
         "app.about": "About",
-        "app.made_by": "Made by {author}",
+        "app.made_by": "Creator: {author}",
         "app.source": "Source code",
         "app.version": "Version {version}",
         # Categories
@@ -237,7 +237,7 @@ STRINGS: dict[str, dict[str, str]] = {
         "app.theme_dark": "Koyu tema",
         "app.language": "Dil",
         "app.about": "Hakkında",
-        "app.made_by": "Geliştiren: {author}",
+        "app.made_by": "Creator: {author}",
         "app.source": "Kaynak kod",
         "app.version": "Sürüm {version}",
         "cat.organize": "Sayfaları düzenle",
